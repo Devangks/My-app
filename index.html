@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>NGL | @devang_ks</title>
-<link rel="icon" type="image/png" href="https://ngl.link/images/favicon.png">
+<link rel="icon" type="image/jpeg" href="Ngl.jpeg">
 <meta name="theme-color" content="#ec006c">
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
@@ -25,8 +25,6 @@ body{
     justify-content:space-between;
     align-items:center;
     padding:25px 15px;
-
-    /* PERFECT GRADIENT */
     background: linear-gradient(135deg, #ff0f7b 0%, #f89b29 100%);
     background-attachment: fixed;
 }
@@ -86,7 +84,6 @@ body{
     position:relative;
     padding:20px;
     height:190px;
-
     background: rgba(255,255,255,0.18);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -100,17 +97,23 @@ textarea{
     outline:none;
     resize:none;
     background:transparent;
-
     font-size:1.4rem;
     font-weight:800;
     color:#000;
 }
 
+/* FADE EFFECT CSS MAGIC */
 textarea::placeholder{
     color:rgba(0,0,0,0.35);
+    transition: opacity 0.4s ease-in-out; /* Smooth transition */
 }
 
-/* DICE (Animation Removed) */
+/* Ye class jab JS lagayega tab text gayab hoga */
+textarea.fade-text::placeholder {
+    opacity: 0;
+}
+
+/* DICE */
 .dice{
     position:absolute;
     bottom:15px;
@@ -125,7 +128,6 @@ textarea::placeholder{
     font-size:20px;
     cursor:pointer;
     box-shadow:0 5px 12px rgba(0,0,0,0.2);
-    /* Transition nikal di taki ghoome nahi */
 }
 
 /* LOCK */
@@ -236,12 +238,37 @@ const questions = [
 "rate me out of 10",
 "what do u think of me?",
 "your biggest regret?",
-"send me a compliment"
+"send me a compliment",
+"worst date story?",
+"ever cheated on an exam?",
+"red flags in a partner?",
+"unpopular opinion?",
+"who do you miss the most?",
+"embarrassing moment?",
+"ship me with someone",
+"describe me in one word",
+"fav memory together?",
+"do u like me?",
+"current crush initials?"
 ];
 
-// 2. Simple logic: No animation, only text change
+// FADE ANIMATION LOGIC FOR PLACEHOLDER
+setInterval(() => {
+    // Agar box khali hai, tabhi animation chalega
+    if(msg.value === "") {
+        msg.classList.add("fade-text"); // Text fade out hoga
+        
+        setTimeout(() => {
+            // 400ms baad naya question aayega aur fade in hoga
+            msg.placeholder = questions[Math.floor(Math.random() * questions.length)];
+            msg.classList.remove("fade-text");
+        }, 400);
+    }
+}, 3000); // Har 3 second mein change hoga
+
+// DICE LOGIC (Direct type hoke text black ho jayega)
 dice.onclick = () => {
-    msg.value = questions[Math.floor(Math.random()*questions.length)];
+    msg.value = questions[Math.floor(Math.random() * questions.length)];
 }
 </script>
 
